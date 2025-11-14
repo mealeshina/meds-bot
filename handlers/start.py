@@ -10,10 +10,13 @@ from utils.emojis import (
     BUTTON_SET_PRESCRIPTION, BUTTON_REPORT,
     EMOJI_HELLO, EMOJI_ERROR, EMOJI_DOWN
 )
+from utils.access_control import AccessControlMiddleware
 
 logger = logging.getLogger(__name__)
 
 router = Router()
+router.message.middleware(AccessControlMiddleware())
+router.callback_query.middleware(AccessControlMiddleware())
 
 
 def get_main_keyboard():

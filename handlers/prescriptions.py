@@ -8,10 +8,13 @@ from aiogram.fsm.state import State, StatesGroup
 
 from services import meds_service
 from utils.emojis import EMOJI_MEDICINE, EMOJI_ERROR, EMOJI_SUCCESS, EMOJI_BOX, EMOJI_CALENDAR
+from utils.access_control import AccessControlMiddleware
 
 logger = logging.getLogger(__name__)
 
 router = Router()
+router.message.middleware(AccessControlMiddleware())
+router.callback_query.middleware(AccessControlMiddleware())
 
 
 class PrescriptionStates(StatesGroup):

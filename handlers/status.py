@@ -6,10 +6,13 @@ from aiogram.filters import Command
 from services import meds_service
 from handlers.start import get_main_keyboard
 from utils.emojis import EMOJI_STATUS, EMOJI_MEDICINE, EMOJI_ERROR, EMOJI_BOX
+from utils.access_control import AccessControlMiddleware
 
 logger = logging.getLogger(__name__)
 
 router = Router()
+router.message.middleware(AccessControlMiddleware())
+router.callback_query.middleware(AccessControlMiddleware())
 
 
 @router.message(Command("status"))

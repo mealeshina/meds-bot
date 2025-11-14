@@ -35,9 +35,13 @@ async def main():
     storage = MemoryStorage()
     dp = Dispatcher(storage=storage)
 
-    # Регистрация middleware для контроля доступа
-    dp.message.middleware(AccessControlMiddleware())
-    dp.callback_query.middleware(AccessControlMiddleware())
+    # Создаём экземпляр middleware для контроля доступа
+    access_middleware = AccessControlMiddleware()
+
+    # Регистрация middleware на уровне диспетчера (для всех обновлений)
+    dp.update.middleware(access_middleware)
+    dp.message.middleware(access_middleware)
+    dp.callback_query.middleware(access_middleware)
 
     # Регистрация хендлеров
     dp.include_router(start_handler.router)
