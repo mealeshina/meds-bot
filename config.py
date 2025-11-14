@@ -4,6 +4,11 @@ from dotenv import load_dotenv
 # Загрузка переменных окружения из .env
 load_dotenv()
 
+# Whitelist разрешённых пользователей (user_id)
+ALLOWED_USER_IDS = [
+    199728431,
+]
+
 # Фиксированный список лекарств для мамы
 # latin_name - необязательное поле, можно не указывать
 MEDICINES_CONFIG = [

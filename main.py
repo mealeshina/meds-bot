@@ -7,6 +7,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 
 from config import Config
 from utils.logging_config import setup_logging
+from utils.access_control import AccessControlMiddleware
 from db import init_db
 from services.scheduler import start_scheduler
 
@@ -33,6 +34,10 @@ async def main():
     )
     storage = MemoryStorage()
     dp = Dispatcher(storage=storage)
+
+    # Регистрация middleware для контроля доступа
+    dp.message.middleware(AccessControlMiddleware())
+    dp.callback_query.middleware(AccessControlMiddleware())
 
     # Регистрация хендлеров
     dp.include_router(start_handler.router)
