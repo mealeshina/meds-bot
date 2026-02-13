@@ -232,10 +232,10 @@ def get_medicines_expiring_within_month():
         current_stock = med["current_stock"]
         
         # Проверяем остаток лекарства
-        if daily_dose > 0 and current_stock > 0:
-            days_left = int(current_stock / daily_dose)
+        if daily_dose > 0:
+            days_left = int(current_stock / daily_dose) if current_stock > 0 else 0
             if days_left <= 30:
-                # Рассчитываем примерную дату окончания
+                # Рассчитываем примерную дату окончания (сегодня, если уже закончилось)
                 expiry_date_meds = today + timedelta(days=days_left)
                 expiring_items.append({
                     "name": name,

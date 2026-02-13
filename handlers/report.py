@@ -53,7 +53,10 @@ async def cmd_report(message: Message):
                 name_display = name
             
             if item_type == "лекарство":
-                text_lines.append(f"{EMOJI_MEDICINE} {name_display} - {formatted_date}")
+                if days_left == 0:
+                    text_lines.append(f"{EMOJI_MEDICINE} {name_display} — закончилось")
+                else:
+                    text_lines.append(f"{EMOJI_MEDICINE} {name_display} - {formatted_date}")
             else:  # рецепт
                 text_lines.append(f"{EMOJI_PRESCRIPTION} {name_display} - {formatted_date}")
         

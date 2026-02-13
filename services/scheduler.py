@@ -86,12 +86,24 @@ async def check_stock(bot: Bot):
             days_left = int(current_stock / daily_dose) if current_stock > 0 else 0
             
             # Проверяем, нужно ли отправить напоминание
+            message = None
             if days_left == notify_before_days:
                 message = (
                     f"{EMOJI_REMINDER_MEDICINE} Через {notify_before_days} дней у мамы закончится <b>{name}</b>.\n"
                     f"Купи, пожалуйста, новые упаковки."
                 )
-                
+            elif days_left == 5 and notify_before_days != 5:
+                message = (
+                    f"{EMOJI_REMINDER_MEDICINE} Осталось 5 дней до окончания <b>{name}</b>.\n"
+                    f"Напоминаю купить новые упаковки."
+                )
+            elif days_left == 0:
+                message = (
+                    f"{EMOJI_REMINDER_MEDICINE} У мамы закончилось <b>{name}</b>!\n"
+                    f"Срочно купи новые упаковки."
+                )
+
+            if message:
                 for tg_user_id in users:
                     try:
                         await bot.send_message(tg_user_id, message)
