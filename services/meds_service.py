@@ -135,7 +135,7 @@ def add_purchase(medicine_id: int, quantity: int):
             raise ValueError(f"Лекарство с id={medicine_id} не найдено")
         
         current_stock = row[0]
-        new_stock = current_stock + quantity
+        new_stock = max(0, current_stock + quantity)  # не уходим в минус при коррекции
         
         # Обновляем остаток
         cursor.execute(
